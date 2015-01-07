@@ -47,7 +47,9 @@ hinted_handoff_throttle_in_kb: 1024
 # Number of threads with which to deliver hints;
 # Consider increasing this number when you have multi-dc deployments, since
 # cross-dc handoff tends to be slower
-max_hints_delivery_threads: 2
+#
+# TODO - modified to support OBB
+max_hints_delivery_threads: 8 
 
 # The following setting populates the page cache on memtable flush and compaction
 # WARNING: Enable this setting only when the whole node's data fits in memory.
@@ -238,7 +240,9 @@ seed_provider:
 # it is most effective under light to moderate load, or read-heavy
 # workloads; under truly massive write load, it will often be too
 # little, too late.
-flush_largest_memtables_at: 0.75
+#
+# TODO - commented out to support OBB
+#flush_largest_memtables_at: 0.75
 
 # emergency pressure valve #2: the first time heap usage after a full
 # (CMS) garbage collection is above this fraction of the max,
@@ -249,8 +253,10 @@ flush_largest_memtables_at: 0.75
 # 
 # Set to 1.0 to disable.  Setting this lower than
 # CMSInitiatingOccupancyFraction is not likely to be useful.
-reduce_cache_sizes_at: 0.85
-reduce_cache_capacity_to: 0.6
+#
+# TODO - commented out to support OBB
+#reduce_cache_sizes_at: 0.85
+#reduce_cache_capacity_to: 0.6
 
 # For workloads with more data than can fit in memory, Cassandra's
 # bottleneck will be reads that need to fetch data from
@@ -284,12 +290,14 @@ concurrent_writes: <%= @concurrent_writes %>
 # while blocked. If you have a large heap and many data directories,
 # you can increase this value for better flush performance.
 # By default this will be set to the amount of data directories defined.
-#memtable_flush_writers: 1
+#
+# TODO - uncommented to support OBB, need to make Puppet configurable
+memtable_flush_writers: 2
 
 # the number of full memtables to allow pending flush, that is,
 # waiting for a writer thread.  At a minimum, this should be set to
 # the maximum number of secondary indexes created on a single CF.
-memtable_flush_queue_size: 4
+#memtable_flush_queue_size: 4
 
 # Whether to, when doing sequential writing, fsync() at intervals in
 # order to force the operating system to flush the dirty
@@ -297,7 +305,9 @@ memtable_flush_queue_size: 4
 # impacting read latencies. Almost always a good idea on SSD:s; not
 # necessarily on platters.
 trickle_fsync: false
-trickle_fsync_interval_in_kb: 10240
+
+# TODO - changed to support OBB
+trickle_fsync_interval_in_kb: 4096
 
 # TCP port, for commands and data
 storage_port: <%= @storage_port %>
@@ -439,12 +449,16 @@ auto_snapshot: <%= @auto_snapshot %>
 # it to be small - at least if you do many partial-row reads - but all
 # the index data is read for each access, so you don't want to generate
 # that wastefully either.
-column_index_size_in_kb: 64
+#
+# TODO - changed to support OBB
+column_index_size_in_kb: 5120
 
 # Size limit for rows being compacted in memory.  Larger rows will spill
 # over to disk and use a slower two-pass compaction process.  A message
 # will be logged specifying the row key.
-in_memory_compaction_limit_in_mb: 64
+#
+# TODO - commented to support OBB
+#in_memory_compaction_limit_in_mb: 64
 
 # Number of simultaneous compactions to allow, NOT including
 # validation "compactions" for anti-entropy repair.  Simultaneous
@@ -457,7 +471,9 @@ in_memory_compaction_limit_in_mb: 64
 #
 # concurrent_compactors defaults to the number of cores.
 # Uncomment to make compaction mono-threaded, the pre-0.8 default.
-#concurrent_compactors: 1
+#
+# TODO - uncommented to support OBB, need to make Puppet configurable
+concurrent_compactors: 4
 
 # Multi-threaded compaction. When enabled, each compaction will use
 # up to one thread per core, plus one thread per sstable being merged.
@@ -472,12 +488,16 @@ multithreaded_compaction: <%= @multithreaded_compaction %>
 # 16 to 32 times the rate you are inserting data is more than sufficient.
 # Setting this to 0 disables throttling. Note that this account for all types
 # of compaction, including validation compaction.
-compaction_throughput_mb_per_sec: 16
+#
+# TODO - changed to support OBB
+compaction_throughput_mb_per_sec: 0
 
 # Track cached row keys during compaction, and re-cache their new
 # positions in the compacted sstable.  Disable if you use really large
 # key caches.
-compaction_preheat_key_cache: true
+#
+# TODO - commented to support OBB
+#compaction_preheat_key_cache: true
 
 # Throttles all outbound streaming file transfers on this node to the
 # given total throughput in Mbps. This is necessary because Cassandra does
@@ -491,7 +511,9 @@ read_request_timeout_in_ms: 10000
 # How long the coordinator should wait for seq or index scans to complete
 range_request_timeout_in_ms: 10000
 # How long the coordinator should wait for writes to complete
-write_request_timeout_in_ms: 10000
+# 
+# TODO - changed to support OBB
+write_request_timeout_in_ms: 20000
 # How long the coordinator should wait for truncates to complete
 # (This can be much longer, because unless auto_snapshot is disabled
 # we need to flush first so we can snapshot before removing the data.)
@@ -650,12 +672,13 @@ index_interval: 128
 # the keystore and truststore.  For instructions on generating these files, see:
 # http://download.oracle.com/javase/6/docs/technotes/guides/security/jsse/JSSERefGuide.html#CreateKeystore
 #
-server_encryption_options:
-    internode_encryption: none
-    keystore: conf/.keystore
-    keystore_password: cassandra
-    truststore: conf/.truststore
-    truststore_password: cassandra
+# TODO - commented this to support OBB
+#server_encryption_options:
+#    internode_encryption: none
+#    keystore: conf/.keystore
+#    keystore_password: cassandra
+#    truststore: conf/.truststore
+#    truststore_password: cassandra
     # More advanced defaults below:
     # protocol: TLS
     # algorithm: SunX509
@@ -664,10 +687,12 @@ server_encryption_options:
     # require_client_auth: false
 
 # enable or disable client/server encryption.
-client_encryption_options:
-    enabled: false
-    keystore: conf/.keystore
-    keystore_password: cassandra
+#
+# TODO - commented this to support OBB
+#client_encryption_options:
+#    enabled: false
+#    keystore: conf/.keystore
+#    keystore_password: cassandra
     # require_client_auth: false
     # Set trustore and truststore_password if require_client_auth is true
     # truststore: conf/.truststore
@@ -683,10 +708,12 @@ client_encryption_options:
 # can be:  all  - all traffic is compressed
 #          dc   - traffic between different datacenters is compressed
 #          none - nothing is compressed.
-internode_compression: <%= @internode_compression %>
+# TODO - commented this to support OBB
+#internode_compression: <%= @internode_compression %>
 
 # Enable or disable tcp_nodelay for inter-dc communication.
 # Disabling it will result in larger (but fewer) network packets being sent,
 # reducing overhead from the TCP protocol itself, at the cost of increasing
 # latency if you block for cross-datacenter responses.
-inter_dc_tcp_nodelay: true
+# TODO - commented this to support OBB
+#inter_dc_tcp_nodelay: true

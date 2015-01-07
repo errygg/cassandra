@@ -201,9 +201,13 @@ fi
 JVM_OPTS="$JVM_OPTS -XX:+UseParNewGC" 
 JVM_OPTS="$JVM_OPTS -XX:+UseConcMarkSweepGC" 
 JVM_OPTS="$JVM_OPTS -XX:+CMSParallelRemarkEnabled" 
-JVM_OPTS="$JVM_OPTS -XX:SurvivorRatio=8" 
+#
+# TODO - need to make this configurable with Puppet, changed to support OBB
+JVM_OPTS="$JVM_OPTS -XX:SurvivorRatio=4" 
 JVM_OPTS="$JVM_OPTS -XX:MaxTenuringThreshold=1"
-JVM_OPTS="$JVM_OPTS -XX:CMSInitiatingOccupancyFraction=75"
+#
+# TODO - need to make this configurable with Puppet, changed to support OBB
+JVM_OPTS="$JVM_OPTS -XX:CMSInitiatingOccupancyFraction=70"
 JVM_OPTS="$JVM_OPTS -XX:+UseCMSInitiatingOccupancyOnly"
 JVM_OPTS="$JVM_OPTS -XX:+UseTLAB"
 # note: bash evals '1.7.x' as > '1.7' so this is really a >= 1.7 jvm check
