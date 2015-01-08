@@ -283,15 +283,13 @@ concurrent_writes: <%= @concurrent_writes %>
 # segment multiple), Cassandra will flush every dirty CF in the oldest
 # segment and remove it.  So a small total commitlog space will tend
 # to cause more flush activity on less-active columnfamilies.
-# commitlog_total_space_in_mb: 4096
+commitlog_total_space_in_mb: 2048 
 
 # This sets the amount of memtable flush writer threads.  These will
 # be blocked by disk io, and each one will hold a memtable in memory
 # while blocked. If you have a large heap and many data directories,
 # you can increase this value for better flush performance.
 # By default this will be set to the amount of data directories defined.
-#
-# TODO - uncommented to support OBB, need to make Puppet configurable
 memtable_flush_writers: 2
 
 # the number of full memtables to allow pending flush, that is,
@@ -304,9 +302,7 @@ memtable_flush_writers: 2
 # buffers. Enable this to avoid sudden dirty buffer flushing from
 # impacting read latencies. Almost always a good idea on SSD:s; not
 # necessarily on platters.
-trickle_fsync: false
-
-# TODO - changed to support OBB
+trickle_fsync: true 
 trickle_fsync_interval_in_kb: 4096
 
 # TCP port, for commands and data
