@@ -230,7 +230,7 @@ seed_provider:
           <% unless @seeds.nil? || @seeds.empty? %> 
           - seeds: <%= @seeds.join(',') %>
           <% end %>
-          <% unless @seed_url? || @seed_url.empty? %>
+          <% unless @seed_url.nil? || @seed_url.empty? %>
           - url: <%= @seed_url %>
           <% end %>
 
