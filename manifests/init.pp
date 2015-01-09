@@ -33,6 +33,7 @@ class cassandra(
     $initial_token              = $cassandra::params::initial_token,
     $num_tokens                 = $cassandra::params::num_tokens,
     $seeds                      = $cassandra::params::seeds,
+    $seed_provider_class_name   = $cassandra::params::seed_provider_class_name,
     $concurrent_reads           = $cassandra::params::concurrent_reads,
     $concurrent_writes          = $cassandra::params::concurrent_writes,
     $incremental_backups        = $cassandra::params::incremental_backups,
@@ -58,6 +59,7 @@ class cassandra(
     validate_string($partitioner)
     validate_string($initial_token)
     validate_string($endpoint_snitch)
+    validate_string($seed_provider_class_name)
 
     validate_re($start_rpc, '^(true|false)$')
     validate_re($start_native_transport, '^(true|false)$')
@@ -109,9 +111,12 @@ class cassandra(
         fail('storage_port must be a port number between 1 and 65535')
     }
 
-    if(empty($seeds)) {
-        fail('seeds must not be empty')
-    }
+    #
+    # TODO - need to check this only if the provider is SimpleSeedProvider
+    #
+    #if(empty($seeds)) {
+    #    fail('seeds must not be empty')
+    #}
 
     if(empty($data_file_directories)) {
         fail('data_file_directories must not be empty')
@@ -163,6 +168,7 @@ class cassandra(
         initial_token              => $initial_token,
         num_tokens                 => $num_tokens,
         seeds                      => $seeds,
+        seed_provider_class_name   => $seed_provider_class_name,
         concurrent_reads           => $concurrent_reads,
         concurrent_writes          => $concurrent_writes,
         incremental_backups        => $incremental_backups,

@@ -180,6 +180,16 @@ class cassandra::params {
         default => $::cassandra_seeds,
     }
 
+    $seed_provider_class_name = $::cassandra_seed_provider_class_name ? {
+        undef   => 'com.apache.cassandra.locator.SimpleSeedProvider',
+        default => $::cassandra_seed_provider_class_name,
+    }
+
+    $seed_url = $::cassandra_seed_url ? {
+        undef   => '',
+        default => $::cassandra_seed_url,
+    }
+
     $default_concurrent_reads = $::processorcount * 8
     $concurrent_reads = $::cassandra_concurrent_reads ? {
         undef   => $default_concurrent_reads,

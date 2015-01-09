@@ -21,6 +21,7 @@ class cassandra::config(
     $initial_token,
     $num_tokens,
     $seeds,
+    $seed_provider_class_name
     $concurrent_reads,
     $concurrent_writes,
     $incremental_backups,

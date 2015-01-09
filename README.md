@@ -14,6 +14,10 @@ Install Apache Cassandra from the [DataStax Community Edition] [1].
 Usage
 -----
 
+#
+# TODO - change these examples to support the ability to use different providers (don't need to specify seeds)
+#
+
 Simple example:
 
     class { 'cassandra':
