@@ -43,6 +43,8 @@ class cassandra(
     $internode_compression      = $cassandra::params::internode_compression,
     $disk_failure_policy        = $cassandra::params::disk_failure_policy,
     $thread_stack_size          = $cassandra::params::thread_stack_size,
+    $survivor_ratio             = $cassandra::params::survivor_ratio,
+    $cms_initiating_occupancy_fraction = $cassandra::params::cms_initiating_occupancy_fraction,
     $service_enable             = $cassandra::params::service_enable,
     $service_ensure             = $cassandra::params::service_ensure
 ) inherits cassandra::params {
@@ -70,6 +72,8 @@ class cassandra(
     validate_re($internode_compression, '^(all|dc|none)$')
     validate_re($disk_failure_policy, '^(stop|best_effort|ignore)$')
     validate_re("${thread_stack_size}", '^[0-9]+$')
+    validate_re("${survivor_ratio}", '^[0-9]+$')
+    validate_re("${cms_initiating_occupancy_fraction}", '^[0-9][0-9]?$|^100$')
     validate_re($service_enable, '^(true|false)$')
     validate_re($service_ensure, '^(running|stopped)$')
 
@@ -169,6 +173,8 @@ class cassandra(
         internode_compression      => $internode_compression,
         disk_failure_policy        => $disk_failure_policy,
         thread_stack_size          => $thread_stack_size,
+        survivor_ratio             => $survivor_ratio,
+        cms_initiating_occupancy_fraction => $cms_initiating_occupancy_fraction,
     }
 
     class { 'cassandra::service':

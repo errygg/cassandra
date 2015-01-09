@@ -31,6 +31,8 @@ class cassandra::config(
     $internode_compression,
     $disk_failure_policy,
     $thread_stack_size,
+    $survivor_ratio,
+    $cms_initiating_occupancy_fraction,
 ) {
     group { 'cassandra':
         ensure  => present,

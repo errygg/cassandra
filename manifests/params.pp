@@ -252,6 +252,16 @@ class cassandra::params {
         default => $::cassandra_thread_stack_size,
     }
 
+    $survivor_ratio = $::cassandra_survivor_ratio ? {
+        undef   => 8,
+        default => $::cassandra_survivor_ratio,
+    }
+
+    $cms_initiating_occupancy_fraction = $::cassandra_cms_initiating_occupancy_fraction ? {
+        undef   => 75,
+        default => $::cassandra_cms_initiating_occupancy_fraction,
+    }
+
     $service_enable = $::cassandra_service_enable ? {
         undef   => 'true',
         default => $::cassandra_service_enable,
