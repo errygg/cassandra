@@ -33,6 +33,7 @@ class cassandra(
     $initial_token              = $cassandra::params::initial_token,
     $num_tokens                 = $cassandra::params::num_tokens,
     $seeds                      = $cassandra::params::seeds,
+    $seed_url                   = $cassandra:;params::seed_url,
     $seed_provider_class_name   = $cassandra::params::seed_provider_class_name,
     $concurrent_reads           = $cassandra::params::concurrent_reads,
     $concurrent_writes          = $cassandra::params::concurrent_writes,
@@ -60,6 +61,7 @@ class cassandra(
     validate_string($initial_token)
     validate_string($endpoint_snitch)
     validate_string($seed_provider_class_name)
+    validate_string($seed_url)
 
     validate_re($start_rpc, '^(true|false)$')
     validate_re($start_native_transport, '^(true|false)$')
@@ -118,6 +120,10 @@ class cassandra(
     #    fail('seeds must not be empty')
     #}
 
+    #
+    # TODO - need to add check here for seed_url
+    #
+    
     if(empty($data_file_directories)) {
         fail('data_file_directories must not be empty')
     }
