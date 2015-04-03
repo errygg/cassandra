@@ -1,0 +1,13 @@
+{
+  "name": "openbookben-cassandra",
+  "version": "0.4.1",
+  "author": "Erik R. Rygg",
+  "license": "Apache 2.0",
+  "summary": "Puppet module to install Apache Cassandra from the DataStax distribution",
+  "project_page": "https://bitbucket.org/openbookben/puppet-cassandra",
+  "source": "https://bitbucket.org/openbookben/puppet-cassandra",
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 3.0.0" },
+    { "name": "puppetlabs/apt", "version_requirement": ">= 1.0" }
+  ]
+}

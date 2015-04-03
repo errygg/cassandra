@@ -57,8 +57,5 @@ Please create bug reports and feature requests in [GitHub issues] [2].
 License
 -------
 
-Copyright (c) 2012-2013 smarchive GmbH, 2013 Gini GmbH
+Copyright (c) 2014 Open Book Ben, Inc.
 
-This script is licensed under the [Apache License, Version 2.0] [3].
-
-[3]: http://www.apache.org/licenses/LICENSE-2.0.html
